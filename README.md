@@ -4,7 +4,7 @@ demo 1 plus the changes from the client meeting of 17 October 2026, built on 26 
 
 ## What's new since demo 1
 
-- **Contact details:** Sales (+91 90046 17373, sales@arshadelectronics.com) and Service (+91 77159 88585, service@arshadelectronics.com). The landlines are gone. The footer shows both; the Simco-Ion page shows the first. The office address includes the pincode and has an "Open in Google Maps" link.
+- **Contact details:** The landlines are gone. The footer shows both; the Simco-Ion page shows the first. The office address includes the pincode and has an "Open in Google Maps" link.
 - **Affiliations:** Plasmaright replaces Anvertech.
 - **Homepage FAQ:** two tabs, Corona treaters and Cap sealers.
 - **Announcements:** a bell in the header with a +1 for anything new. A new announcement pops up once per visitor.
