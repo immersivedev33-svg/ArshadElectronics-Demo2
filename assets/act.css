@@ -1,0 +1,68 @@
+/* ArshadElectronics-demo2 (27 Oct 2026): the 2026 catalogue (act.js). Colours come from the palette tokens. */
+
+/* model cards under the series' spec table */
+.hp .act-models{margin-top:22px;display:grid;gap:12px}
+.hp .act-mh{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.hp .act-mh b{font-size:18px;letter-spacing:-.01em}
+.hp .act-mh span{font-size:14px;color:var(--muted)}
+.hp .act-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:10px}
+.hp .act-mc{display:grid;gap:10px;align-content:start;padding:14px 16px;border-radius:16px;background:var(--surf);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 10%,transparent);animation:actIn .5s cubic-bezier(.32,.72,0,1) both}
+.hp .act-mc:nth-child(2){animation-delay:60ms}.hp .act-mc:nth-child(3){animation-delay:120ms}.hp .act-mc:nth-child(4){animation-delay:180ms}
+.hp .act-mc:nth-child(5){animation-delay:240ms}.hp .act-mc:nth-child(6){animation-delay:300ms}
+.hp .act-mc>b{font-size:16.5px;letter-spacing:-.01em}
+.hp .act-mc dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 12px;margin:0;font-size:15px}
+.hp .act-mc dt{font:600 11px/1.7 var(--fM,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.hp .act-mc dd{margin:0;font-variant-numeric:tabular-nums}
+.hp .act-mc dd:not(:last-of-type){white-space:nowrap}
+.hp .act-gen{display:inline-block;margin:0 5px 4px 0;padding:2px 8px;border-radius:999px;font-size:13px;white-space:nowrap;background:color-mix(in srgb,var(--ink) 7%,transparent)}
+.hp .act-src{margin:0}
+@keyframes actIn{from{opacity:0;transform:translateY(8px)}}
+
+/* photo view: the catalogue plate (photo on a white plate, series / models / generator under it) */
+html[data-l-p-pics="site"] .hp .mvsite.d1-ph.act-plate{inset:2% 4% 3%;padding:6px;gap:0;border-radius:26px;background:color-mix(in srgb,var(--ink) 6%,transparent)}
+html[data-l-p-pics="site"] .hp .act-plate .d1-big{background:var(--surf,#FFFDF8);border-radius:20px 20px 0 0;box-shadow:inset 0 1px 0 color-mix(in srgb,#FFFFFF 50%,transparent)}
+html[data-l-p-pics="site"] .hp .act-plate:not(:has(.act-strip:not([hidden]))) .d1-big{border-radius:20px}
+html[data-l-p-pics="site"] .hp .mvsite.d1-ph.act-plate :is(.d1-glow,.d1-plinth,.mvs-th){display:none}
+html[data-l-p-pics="site"] .hp .mvsite.d1-ph.act-plate>:is(.d1-big,.act-strip){justify-self:stretch;width:auto}
+html[data-l-p-pics="site"] .hp .mvsite.d1-ph.act-plate .mvs-p{max-width:84cqw;max-height:calc(100cqh - 36px);margin:0;filter:drop-shadow(0 12px 16px color-mix(in srgb,var(--ink) 16%,transparent))}
+.hp .act-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:var(--surf,#FFFDF8);border-radius:0 0 20px 20px;
+  border-top:1px solid color-mix(in srgb,var(--ink) 10%,transparent);pointer-events:auto}
+.hp .act-strip>div{display:grid;gap:3px;padding:10px 14px;min-width:0}
+.hp .act-strip>div+div{border-left:1px solid color-mix(in srgb,var(--ink) 10%,transparent)}
+.hp .act-strip small{font:600 10.5px/1.2 var(--l-mono,ui-monospace,monospace);letter-spacing:.1em;text-transform:uppercase;color:var(--muted,var(--mut))}
+.hp .act-strip b{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink)}
+
+/* 3D view, ACT LBL CM: the catalogue photo stands in for the missing model */
+.hp .act-nomodel{position:absolute;inset:0;z-index:2;display:grid;place-items:center;align-content:center;gap:10px;padding:6% 8%;pointer-events:none}
+.hp .act-nomodel img{width:min(86%,560px);height:auto;max-height:70%;object-fit:contain;filter:drop-shadow(0 16px 20px rgba(0,0,0,.4))}
+.hp .act-nomodel span{font-size:13px;color:#E9ECE0;background:rgba(10,12,8,.6);padding:5px 10px;border-radius:999px}
+
+/* Fluxomatic opening: the generator group shot */
+.hp .vis.act-famvis{background:transparent!important;box-shadow:none!important;overflow:visible}
+.hp .act-fam{margin:0;display:grid;gap:12px;justify-items:center;width:100%}
+.hp .act-fam-pic{position:relative;width:100%;display:grid;place-items:center}
+.hp .act-fam-pic::after{content:"";position:absolute;left:10%;right:10%;bottom:-2%;height:12%;border-radius:50%;z-index:0;
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--ink) 26%,transparent),transparent)}
+.hp .act-fam img{position:relative;z-index:1;width:100%;max-width:640px;height:auto;cursor:zoom-in}
+.hp .act-fam figcaption{font-size:14px;color:var(--mut,var(--muted))}
+
+/* Fluxomatic: "What is corona treatment?" over the glow photo */
+.hp .act-glow{position:relative;border-radius:var(--r,22px);overflow:hidden;background:#100E0B;min-height:440px;display:grid;align-items:center}
+.hp .act-glow>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:72% 50%}
+.hp .act-glow::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,#100E0B 10%,rgba(16,14,11,.82) 48%,rgba(16,14,11,.15) 82%)}
+.hp .act-glow-tx{position:relative;z-index:2;padding:clamp(24px,5vw,60px);max-width:640px;display:grid;gap:14px}
+.hp .act-glow-tx :is(h2,h3,p){color:#F3EFE6}
+.hp .act-glow-tx .eb{color:#D8CCFF;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18)}
+.hp .act-glow-tx .prose p{color:rgba(243,239,230,.86);margin:0 0 12px}
+@media (max-width:760px){
+  .hp .act-glow{min-height:0;align-items:end}
+  .hp .act-glow>img{height:300px;bottom:auto}
+  .hp .act-glow::before{background:linear-gradient(180deg,rgba(16,14,11,.1) 0,#100E0B 300px)}
+  .hp .act-glow-tx{padding-top:240px}
+}
+@media (prefers-reduced-motion:reduce){ .hp .act-mc{animation:none} }
+
+/* homepage corona card: frame the glow close-up on the violet discharge at the electrode's teeth */
+.hp .door.ac-F .ph-still,.hp .big.ac-F .ph-still{background-position:center,30% 88%!important}
+.hp .act-glow-tx h2{margin-bottom:0}

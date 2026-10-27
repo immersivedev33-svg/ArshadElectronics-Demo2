@@ -1,0 +1,182 @@
+/* Arshad Site Lab 3: Lab 2's layout options and drawer styles (forked; Lab 2 is unchanged). The redesign itself is lab3.css. */
+
+/* ===================== layout options ===================== */
+/* whole site: page width */
+html[data-l-width="narrow"] .hp{--max:1040px}
+html[data-l-width="narrow"] .hp .p-wrap{max-width:1040px}
+html[data-l-width="wide"] .hp{--max:1440px}
+html[data-l-width="wide"] .hp .p-wrap{max-width:1400px}
+
+/* whole site: section headings centred */
+html[data-l-heads="center"] .hp .sh{margin-inline:auto;text-align:center;justify-items:center}
+html[data-l-heads="center"] .hp .pghead .wrap{text-align:center}
+html[data-l-heads="center"] .hp .pghead .wrap>*{margin-inline:auto}
+html[data-l-heads="center"] .hp .tsec>.wrap>.eb{display:block;text-align:center}
+html[data-l-heads="center"] .hp .pp .p-wrap>:is(h2.p-h2,.p-sub){text-align:center;margin-inline:auto}
+/* whole site: heading left, intro right */
+html[data-l-heads="split"] .hp .sh:has(>.lead){max-width:none;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:clamp(24px,5cqi,72px);align-items:end}
+html[data-l-heads="split"] .hp .sh:has(>.lead)>:not(.lead){grid-column:1}
+html[data-l-heads="split"] .hp .sh:has(>.lead)>.lead{grid-column:2;grid-row:1 / span 2;align-self:end}
+html[data-l-heads="split"] .hp .pghead .wrap:has(>.lead){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:clamp(24px,5cqi,72px);align-items:end}
+html[data-l-heads="split"] .hp .pghead .wrap>.lead{grid-column:2;grid-row:1 / span 2}
+@container hp (max-width:760px){
+  html[data-l-heads="split"] .hp .sh:has(>.lead),html[data-l-heads="split"] .hp .pghead .wrap:has(>.lead){grid-template-columns:1fr}
+  html[data-l-heads="split"] .hp :is(.sh,.pghead .wrap)>.lead{grid-column:1;grid-row:auto}
+}
+
+/* homepage: opening headline */
+html[data-l-hero-top="stack"] .hp .hero-top{grid-template-columns:1fr;align-items:start}
+html[data-l-hero-top="center"] .hp .hero-top{grid-template-columns:1fr;text-align:center;justify-items:center}
+html[data-l-hero-top="center"] .hp .hero-top>div{justify-items:center!important}
+html[data-l-hero-top="center"] .hp .hero-top [style*="display:flex"]{justify-content:center}
+html[data-l-hero-top="center"] .hp .hero-top .lead{max-width:60ch}
+/* homepage: story photo on the right */
+html[data-l-story="right"] .hp .chap>.stick{order:2}
+/* homepage: numbers */
+html[data-l-proof="right"] .hp .globe-wrap>.globe{order:2}
+html[data-l-proof="top"] .hp .globe-wrap{grid-template-columns:1fr}
+html[data-l-proof="top"] .hp .globe-wrap>.globe{width:min(100%,520px);margin-inline:auto}
+html[data-l-proof="top"] .hp .globe-wrap .gnums{grid-template-columns:repeat(3,minmax(0,1fr))}
+@container hp (max-width:640px){ html[data-l-proof="top"] .hp .globe-wrap .gnums{grid-template-columns:1fr} }
+/* homepage: why Arshad */
+html[data-l-why="grid"] .hp .why4{grid-template-columns:repeat(2,minmax(0,1fr))}
+html[data-l-why="list"] .hp .why4{grid-template-columns:1fr;max-width:820px}
+/* homepage: partners stacked */
+html[data-l-pars="list"] .hp .pars{grid-template-columns:1fr;max-width:820px}
+/* homepage: help me choose + FAQ stacked */
+html[data-l-help="stack"] .hp .help2{grid-template-columns:1fr}
+/* contact block: form first */
+html[data-l-con="swap"] .hp .con{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
+html[data-l-con="swap"] .hp .con>.det{order:2}
+@container hp (max-width:820px){ html[data-l-con="swap"] .hp .con{grid-template-columns:1fr} }
+/* two-column text blocks (product verticals overview, About "Our focus") */
+html[data-l-two="swap"] .hp .two>:first-child{order:2}
+/* product pages: picture left in the split opening */
+html[data-l-p-hero="swap"] .hp .thero[data-v="split"] .wrap{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+html[data-l-p-hero="swap"] .hp .thero[data-v="split"] .wrap>.vis{order:-1}
+@container hp (max-width:860px){ html[data-l-p-hero="swap"] .hp .thero[data-v="split"] .wrap{grid-template-columns:1fr} }
+/* product pages: two-column blocks swapped */
+html[data-l-p-mirror="swap"] .hp .pp :is(.p-grid2,.bz-split,.fm-dyne)>:first-child{order:2}
+
+/* ===================== the drawer ===================== */
+#lab2{--l2bg:#0F1209;--l2s:#171B11;--l2s2:#20261A;--l2ink:#ECEFE3;--l2mut:#A8AF9A;--l2line:#2F3726;--l2acc:#C9D5A2;
+  position:fixed;top:0;right:0;bottom:0;z-index:2147483000;width:0;font:400 14px/1.45 Inter,system-ui,sans-serif;color:var(--l2ink)}
+#lab2 *{box-sizing:border-box}
+#lab2 .l2-tab{position:fixed;right:0;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;padding:14px 9px;border:1px solid var(--l2line);border-right:0;border-radius:10px 0 0 10px;background:var(--l2acc);color:#1B1F14;font:700 12px/1 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;box-shadow:-6px 0 24px rgba(0,0,0,.35)}
+#lab2.open .l2-tab{writing-mode:horizontal-tb;transform:none;top:14px;right:14px;z-index:2;border:1px solid var(--l2line);border-radius:8px;padding:6px 10px;font-size:16px;background:var(--l2s2);color:var(--l2ink);box-shadow:none}
+#lab2 .l2-panel{position:fixed;top:0;right:0;bottom:0;width:min(400px,100vw);background:var(--l2bg);border-left:1px solid var(--l2line);box-shadow:-20px 0 60px rgba(0,0,0,.5);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .35s cubic-bezier(.2,.7,.2,1);visibility:hidden}
+#lab2.open .l2-panel{transform:none;visibility:visible}
+#lab2 header{padding:18px 20px 10px;display:grid;gap:2px}
+#lab2 header b{font:800 18px/1.2 Montserrat,system-ui,sans-serif}
+#lab2 header span{color:var(--l2mut);font-size:13px}
+#lab2 .l2-tabs{display:flex;gap:4px;padding:0 16px;border-bottom:1px solid var(--l2line)}
+#lab2 .l2-tabs button{flex:1;padding:10px 6px;background:none;border:0;border-bottom:2px solid transparent;color:var(--l2mut);font:600 13px/1 Inter,sans-serif;cursor:pointer}
+#lab2 .l2-tabs button[aria-selected="true"]{color:var(--l2ink);border-bottom-color:var(--l2acc)}
+#lab2 .l2-body{flex:1;overflow:auto;padding:14px 16px 40px;overscroll-behavior:contain}
+#lab2 h4{margin:16px 0 8px;font:700 11px/1 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--l2acc)}
+#lab2 em{font-style:normal;font:600 10px/1 "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:#1B1F14;background:var(--l2acc);padding:3px 5px;border-radius:4px;vertical-align:2px;margin-left:4px}
+#lab2 .l2-note{margin:8px 0;color:var(--l2mut);font-size:12.5px}
+#lab2 .l2-pals{display:grid;gap:8px}
+#lab2 .l2-pal{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:12px;align-items:center;text-align:left;padding:10px 12px;background:var(--l2s);border:1px solid var(--l2line);border-radius:10px;color:inherit;cursor:pointer}
+#lab2 .l2-pal .sw{grid-row:1 / span 2;display:flex;border-radius:6px;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.15)}
+#lab2 .l2-pal .sw i{width:14px;height:34px;display:block}
+#lab2 .l2-pal b{font-size:14px}
+#lab2 .l2-pal small{color:var(--l2mut);font-size:12px;line-height:1.35}
+#lab2 :is(.l2-pal,.l2-acc)[aria-pressed="true"]{border-color:var(--l2acc);box-shadow:inset 0 0 0 1px var(--l2acc);background:var(--l2s2)}
+#lab2 .l2-accs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#lab2 .l2-acc{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--l2s);border:1px solid var(--l2line);border-radius:10px;color:inherit;font:500 13px/1.2 Inter,sans-serif;cursor:pointer;text-align:left}
+#lab2 .l2-acc i{width:18px;height:18px;border-radius:50%;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.2)}
+#lab2 .l2-grp{border:1px solid var(--l2line);border-radius:10px;margin:10px 0;background:var(--l2s)}
+#lab2 .l2-grp summary{padding:11px 12px;font-weight:700;cursor:pointer}
+#lab2 .l2-grp>.l2-note{padding:0 12px}
+#lab2 .l2-row{display:grid;gap:6px;padding:9px 12px;border-top:1px solid var(--l2line)}
+#lab2 .l2-row>span{font-size:12.5px;color:var(--l2mut)}
+#lab2 .l2-seg{display:flex;flex-wrap:wrap;gap:5px}
+#lab2 .l2-seg button{padding:6px 9px;border:1px solid var(--l2line);border-radius:7px;background:var(--l2bg);color:var(--l2ink);font:500 12.5px/1.2 Inter,sans-serif;cursor:pointer;text-align:left}
+#lab2 .l2-seg button[aria-pressed="true"]{background:var(--l2acc);border-color:var(--l2acc);color:#1B1F14;font-weight:700}
+#lab2 :is(button):focus-visible{outline:2px solid var(--l2acc);outline-offset:2px}
+#lab2 textarea{width:100%;background:var(--l2s);color:var(--l2ink);border:1px solid var(--l2line);border-radius:8px;padding:10px;font:12.5px/1.5 "IBM Plex Mono",monospace;resize:vertical}
+#lab2 .l2-acts{display:flex;gap:8px;margin-top:10px}
+#lab2 .l2-btn{padding:9px 14px;border-radius:999px;border:1px solid var(--l2acc);background:var(--l2acc);color:#1B1F14;font:700 13px/1 Inter,sans-serif;cursor:pointer}
+#lab2 .l2-btn.ghost{background:none;color:var(--l2ink);border-color:var(--l2line)}
+@media (max-width:520px){ #lab2.open .l2-tab{writing-mode:horizontal-tb;transform:none;top:14px;right:14px;z-index:2;border:1px solid var(--l2line);border-radius:8px;padding:6px 10px;font-size:16px;background:var(--l2s2);color:var(--l2ink);box-shadow:none} }
+
+/* ===================== fixes for Site Lab variants offered here ===================== */
+/* header with contact strip: the strip's company line only repeats the homepage's opening line, so it stays hidden;
+   the email and mobile it shows are the same as the footer's */
+.hp .shdr .strip .wrap>span:first-child{visibility:hidden}
+/* four doors / two big two small: the plasmaright.com tag on the plasma door at the 12px minimum */
+.hp .door .vis .ext{font-size:12px}
+/* numbers with the globe above: three figures side by side only when there is room for "10,000 sq ft" */
+html[data-l-proof="top"] .hp .globe-wrap .gnums{grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr))}
+/* series as a list: readable line length */
+.hp .series[data-v="list"] .scard p{max-width:68ch}
+/* product opening "text over the picture": the text card and the picture share one cell, so the opening grows to fit a
+   tall card (Brezo, 3D objects, Simco) instead of the card climbing under the header; the stage's buttons move to the right */
+@container hp (min-width:861px){
+  .hp .thero[data-v="overlay"] .wrap{display:grid;grid-template-areas:"o"}
+  .hp .thero[data-v="overlay"] .wrap>:is(.vis,.txt){grid-area:o}
+  .hp .thero[data-v="overlay"] .wrap>.txt{position:relative;left:auto;bottom:auto;align-self:end;justify-self:start;margin:clamp(72px,8cqi,112px) var(--pad) var(--pad)}
+  .hp .thero[data-v="overlay"] .p-sbar{left:auto;right:16px;justify-content:flex-end}
+}
+
+/* ===================== the film page follows the product page options ===================== */
+/* product opening: banner = the photo as a band, text below it; text over the picture = text in a card over the photo */
+html[data-l-t-hero="banner"] .hp[data-page="films"] .pp .fm-hero{display:block;min-height:0;overflow:visible;background:none}
+html[data-l-t-hero="banner"] .hp[data-page="films"] .pp .fm-hero .ph{position:relative;inset:auto;height:clamp(260px,30cqi,440px)}
+html[data-l-t-hero="banner"] .hp[data-page="films"] .pp .fm-hero::after{display:none}
+html[data-l-t-hero="banner"] .hp[data-page="films"] .pp .fm-hero .txt{padding-top:clamp(24px,3cqi,40px)}
+html[data-l-t-hero="banner"] .hp[data-page="films"] .pp .fm-hero .txt::before{display:none}
+html[data-l-t-hero="banner"] .hp[data-page="films"] .pp .fm-hero .txt :is(.p-lede,.p-note){text-shadow:none}
+html[data-l-t-hero="overlay"] .hp[data-page="films"] .pp .fm-hero .txt{margin:0 var(--pad,32px) var(--pad,32px);max-width:min(640px,92%);padding:clamp(18px,3cqi,30px);background:color-mix(in srgb,var(--surf) 88%,transparent);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:calc(var(--r) * 1.2)}
+html[data-l-t-hero="overlay"] .hp[data-page="films"] .pp .fm-hero .txt::before{display:none}
+/* opening sides: the text block on the right */
+html[data-l-p-hero="swap"] .hp[data-page="films"] .pp .fm-hero .txt{display:grid;justify-items:end;text-align:right}
+html[data-l-p-hero="swap"] .hp[data-page="films"] .pp .fm-hero .txt .p-actions{justify-content:flex-end}
+html[data-l-p-hero="swap"][data-l-t-hero="overlay"] .hp[data-page="films"] .pp .fm-hero .txt{margin-left:auto}
+/* two-column blocks swapped: also the series finder */
+html[data-l-p-mirror="swap"] .hp[data-page="films"] .pp .fm-finder>:first-child{order:2}
+html[data-l-p-mirror="swap"] .hp[data-page="films"] .pp .fm-finder{grid-template-columns:minmax(0,1.6fr) minmax(0,.8fr)}
+/* how it works: cards = separate cards; line = points on a line */
+html[data-l-t-how="cards"] .hp[data-page="films"] .pp .fm-sys{gap:12px}
+html[data-l-t-how="cards"] .hp[data-page="films"] .pp .fm-sys div{border-radius:var(--r)}
+html[data-l-t-how="cards"] .hp[data-page="films"] .pp .fm-sys div::after{display:none}
+html[data-l-t-how="line"] .hp[data-page="films"] .pp .fm-sys{gap:24px}
+html[data-l-t-how="line"] .hp[data-page="films"] .pp .fm-sys::before{content:"";position:absolute;left:0;right:0;top:6px;height:2px;background:var(--line)}
+html[data-l-t-how="line"] .hp[data-page="films"] .pp .fm-sys div{border:0;background:none;padding:28px 0 0}
+html[data-l-t-how="line"] .hp[data-page="films"] .pp .fm-sys div::before{content:"";position:absolute;left:0;top:0;width:14px;height:14px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 4px var(--bg)}
+html[data-l-t-how="line"] .hp[data-page="films"] .pp .fm-sys div::after{display:none}
+/* models and series (the finder): panel = the whole finder in one box; open = no boxes */
+html[data-l-t-models="panel"] .hp[data-page="films"] .pp #finder>.p-wrap{background:var(--surf);border:1px solid var(--line);border-radius:calc(var(--r) * 1.2);padding:clamp(20px,3cqi,36px)}
+html[data-l-t-models="open"] .hp[data-page="films"] .pp #finder .fm-ctl{background:none;border:0;box-shadow:none;padding:0}
+/* specs (the series detail): open = no boxes */
+html[data-l-t-specs="open"] .hp[data-page="films"] .pp #series .p-card{background:none;border:0;box-shadow:none;padding:0}
+/* demos in a grid: the dyne pen's text beside the film */
+html[data-l-t-demo="grid"] .hp[data-page="films"] .pp .fm-pen-sec .p-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);column-gap:clamp(24px,4cqi,56px);align-items:start}
+html[data-l-t-demo="grid"] .hp[data-page="films"] .pp .fm-pen-sec .p-wrap>:not(.fm-pen){grid-column:1}
+html[data-l-t-demo="grid"] .hp[data-page="films"] .pp .fm-pen-sec .p-wrap>.fm-pen{grid-column:2;grid-row:1 / span 3}
+@container hp (max-width:860px){ html[data-l-t-demo="grid"] .hp[data-page="films"] .pp .fm-pen-sec .p-wrap{grid-template-columns:1fr} html[data-l-t-demo="grid"] .hp[data-page="films"] .pp .fm-pen-sec .p-wrap>*{grid-column:1!important;grid-row:auto!important} }
+/* industries (what it treats, where it is used): chips = compact; list = one per line */
+html[data-l-t-ind="chips"] .hp[data-page="films"] .pp section:has(.p-grid2 .p-chips):not(#series) .p-chip{padding:5px 10px;font-size:12.5px}
+html[data-l-t-ind="list"] .hp[data-page="films"] .pp section:has(.p-grid2 .p-chips):not(#series) .p-chips{flex-direction:column;gap:0}
+html[data-l-t-ind="list"] .hp[data-page="films"] .pp section:has(.p-grid2 .p-chips):not(#series) .p-chip{border:0;border-bottom:1px solid var(--line);border-radius:0;background:none;padding:10px 0;justify-content:flex-start}
+/* FAQ in two columns */
+html[data-l-t-faq="cols"] .hp[data-page="films"] .pp #p-faq .p-faq{columns:2;column-gap:clamp(24px,4cqi,56px)}
+html[data-l-t-faq="cols"] .hp[data-page="films"] .pp #p-faq .p-faq details{break-inside:avoid}
+@container hp (max-width:760px){ html[data-l-t-faq="cols"] .hp[data-page="films"] .pp #p-faq .p-faq{columns:1} }
+/* enquiry as a single card */
+html[data-l-t-enq="card"] .hp[data-page="films"] .pp #enq .p-grid2{grid-template-columns:1fr;max-width:720px;margin-inline:auto}
+
+/* the floating call and WhatsApp buttons follow the palette's action colour (olive in draft 1, as before) */
+.o-fab>button{background:var(--brand,#576630);color:var(--brandInk,#fff)}
+
+/* drawer: background tab */
+#lab2 .l2-backs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#lab2 .l2-back:only-child{grid-column:1 / -1}
+#lab2 .l2-back{display:grid;gap:5px;align-content:start;text-align:left;padding:8px;background:var(--l2s);border:1px solid var(--l2line);border-radius:10px;color:inherit;cursor:pointer}
+#lab2 .l2-back[aria-pressed="true"]{border-color:var(--l2acc);box-shadow:inset 0 0 0 1px var(--l2acc);background:var(--l2s2)}
+#lab2 .l2-back .l2b{position:relative;display:block;height:64px;border-radius:8px;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.14)}
+#lab2 .l2-back b{font-size:13.5px;line-height:1.25}
+#lab2 .l2-back small{color:var(--l2mut);font-size:11.5px;line-height:1.35}
+#lab2 .l2-seg button:disabled{opacity:.4;cursor:default}
+#lab2 .l2-tabs button{padding-inline:2px}

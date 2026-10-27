@@ -1,0 +1,106 @@
+/* ArshadElectronics-demo2 (26 Oct 2026): announcements bell and pop-up, Google reviews, product videos, FAQ tabs,
+   contact labels and map link. Colours come from the palette tokens, so every palette and the dark ones work. */
+
+/* ---- bell with +1 ---- */
+.hp .d2-bell{position:relative}
+.hp .shdr .burger{position:relative}
+.hp .shdr:not(.compact) .d2-badge-m{display:none}
+.hp .d2-badge{position:absolute;top:-4px;right:-6px;min-width:20px;height:18px;padding:0 5px;border-radius:999px;display:grid;place-items:center;
+  font:700 11px/1 'Geist',system-ui,sans-serif;letter-spacing:0;background:var(--brand);color:var(--brandInk,#FFFFFF);
+  box-shadow:0 0 0 2px var(--bg);animation:d2pulse 2.4s cubic-bezier(.32,.72,0,1) 3}
+@keyframes d2pulse{0%,100%{transform:scale(1)}40%{transform:scale(1.18)}}
+
+/* ---- announcement dialog ---- */
+.d2-modal{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.d2-scrim{position:absolute;inset:0;background:color-mix(in srgb,#0B0D08 55%,transparent);backdrop-filter:blur(6px);opacity:0;transition:opacity .4s cubic-bezier(.32,.72,0,1)}
+.d2-card{position:relative;width:min(520px,100%);max-height:min(80vh,640px);overflow:auto;border-radius:22px;padding:22px 24px 24px;
+  background:var(--surf,#FFFFFF);color:var(--ink,#1F1D17);box-shadow:0 30px 80px -30px color-mix(in srgb,#000000 60%,transparent),0 0 0 1px color-mix(in srgb,var(--ink,#000000) 10%,transparent);
+  transform:translateY(18px) scale(.98);opacity:0;transition:transform .5s cubic-bezier(.32,.72,0,1),opacity .4s cubic-bezier(.32,.72,0,1)}
+.d2-modal.on .d2-scrim{opacity:1}
+.d2-modal.on .d2-card{transform:none;opacity:1}
+.d2-card header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.d2-card .eb{font:600 12px/1 'Geist Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--mut,#625C4E)}
+.d2-x{width:36px;height:36px;border-radius:50%;border:1px solid color-mix(in srgb,var(--ink,#000000) 14%,transparent);background:transparent;color:inherit;font:400 22px/1 system-ui,sans-serif;cursor:pointer}
+.d2-x:focus-visible,.d2-vplay:focus-visible,.d2-fqt button:focus-visible{outline:2px solid var(--ink,#000000);outline-offset:2px}
+.d2-ann{padding:14px 0;border-top:1px solid color-mix(in srgb,var(--ink,#000000) 10%,transparent)}
+.d2-ann:first-child{border-top:0;padding-top:4px}
+.d2-ann h3{margin:0 0 8px;font:600 21px/1.25 'Geist',system-ui,sans-serif;letter-spacing:-.01em;text-wrap:balance}
+.d2-ann p{margin:0 0 14px;font:400 16px/1.6 'Geist',system-ui,sans-serif;color:var(--ink,#1F1D17)}
+.d2-annlink{display:inline-flex}
+.d2-empty{margin:6px 0 0;font:400 16px/1.6 'Geist',system-ui,sans-serif;color:var(--mut,#625C4E)}
+
+/* ---- Google reviews: rating moment, glass cards that fan, then spring into a coverflow ---- */
+.hp .d2-rate{display:flex;align-items:center;gap:14px 26px;flex-wrap:wrap;margin:8px 0 22px}
+.hp .d2-num{font:650 clamp(60px,9vw,96px)/.9 'Geist',system-ui,sans-serif;letter-spacing:-.045em;font-variant-numeric:tabular-nums;color:var(--ink)}
+.hp .d2-bar{position:relative;display:inline-flex;gap:3px;color:color-mix(in srgb,var(--ink) 16%,transparent)}
+.hp .d2-bar svg,.hp .d2-fill svg{width:26px;height:26px;flex:none}
+.hp .d2-fill{position:absolute;inset:0 auto 0 0;display:inline-flex;gap:3px;overflow:hidden;width:var(--w,96%);color:#C98A12;transition:width 1.4s cubic-bezier(.32,.72,0,1)}
+.hp .d2-rate p{margin:6px 0 0;color:var(--mut);font-size:15px}
+.hp .d2-stars{display:inline-flex;gap:2px;color:#C98A12}
+.hp .d2-glass{position:relative;border-radius:28px;padding:clamp(22px,4vw,44px) clamp(10px,3vw,32px) 20px;overflow:hidden;
+  background:radial-gradient(42% 62% at 16% 28%,color-mix(in srgb,var(--brand) 34%,transparent),transparent 72%),
+             radial-gradient(40% 58% at 84% 78%,color-mix(in srgb,#D79A2B 30%,transparent),transparent 72%),
+             color-mix(in srgb,var(--ink) 3%,transparent)}
+.hp .d2-cf{position:relative;perspective:1200px;min-height:240px}
+.hp .d2-gcard{position:absolute;left:50%;top:6px;width:min(420px,82%);margin:0;display:grid;gap:14px;padding:22px;border-radius:20px;
+  background:color-mix(in srgb,var(--surf) 58%,transparent);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);
+  box-shadow:inset 0 1px 0 color-mix(in srgb,#FFFFFF 40%,transparent),0 0 0 1px color-mix(in srgb,var(--ink) 10%,transparent),0 18px 40px -26px color-mix(in srgb,var(--ink) 45%,transparent);
+  transition:transform .7s cubic-bezier(.32,.72,0,1),opacity .7s cubic-bezier(.32,.72,0,1),filter .7s cubic-bezier(.32,.72,0,1)}
+.hp .d2-gcard.side{cursor:pointer;filter:saturate(.75)}
+.hp .d2-cf.d2-spring .d2-gcard{transition:transform 1.05s cubic-bezier(.34,1.56,.64,1),opacity .6s cubic-bezier(.32,.72,0,1),filter .6s}
+.hp .d2-gtop{display:flex;align-items:center;gap:12px}
+.hp .d2-av{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font:600 14px/1 'Geist',system-ui,sans-serif;background:var(--brand);color:var(--bg);flex:none}
+.hp .d2-gtop b{display:block;font-weight:600;line-height:1.25;color:var(--ink)}
+.hp .d2-gtop small{display:block;font:500 12px/1.3 'Geist Mono',ui-monospace,monospace;color:var(--mut)}
+.hp .d2-g{margin-left:auto;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:600 13px/1 'Geist',system-ui,sans-serif;color:var(--mut);box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 14%,transparent);flex:none}
+.hp .d2-gcard blockquote{margin:0;font:400 16px/1.6 'Geist',system-ui,sans-serif;color:var(--ink)}
+.hp .d2-cfbar{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:14px}
+.hp .d2-circ{width:44px;height:44px;border-radius:50%;border:1px solid color-mix(in srgb,var(--ink) 16%,transparent);background:color-mix(in srgb,var(--surf) 70%,transparent);color:var(--ink);cursor:pointer;display:grid;place-items:center;font-size:18px;transition:transform .3s cubic-bezier(.32,.72,0,1)}
+.hp .d2-circ:hover{transform:translateY(-1px)}
+.hp .d2-circ:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.hp .d2-dots{display:flex;gap:6px}
+.hp .d2-dots i{width:7px;height:7px;border-radius:50%;background:color-mix(in srgb,var(--ink) 22%,transparent);transition:width .3s cubic-bezier(.32,.72,0,1),background-color .3s}
+.hp .d2-dots i.on{width:20px;border-radius:999px;background:var(--ink)}
+.hp .d2-revlink{margin-top:22px;display:inline-flex}
+@media (prefers-reduced-motion:reduce){ .hp .d2-gcard,.hp .d2-fill,.hp .d2-dots i{transition:none} }
+
+/* ---- product video ---- */
+.hp .d2-vid{margin:0 0 28px;display:grid;grid-template-columns:minmax(0,560px) minmax(0,1fr);gap:20px;align-items:center}
+.hp .d2-vplay,.hp .d2-vframe{position:relative;width:100%;aspect-ratio:16/9;max-width:100%;border-radius:18px;overflow:hidden;border:0;padding:0;background:#0B0D08;cursor:pointer;
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 10%,transparent)}
+.hp .d2-vplay img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.32,.72,0,1)}
+.hp .d2-vplay:hover img{transform:scale(1.03)}
+.hp .d2-pbtn{position:absolute;left:50%;top:50%;width:68px;height:68px;margin:-34px 0 0 -34px;border-radius:50%;display:grid;place-items:center;
+  background:color-mix(in srgb,#FFFFFF 88%,transparent);color:#111111;box-shadow:0 12px 30px -10px rgba(0,0,0,.5);transition:transform .4s cubic-bezier(.32,.72,0,1)}
+.hp .d2-vplay:hover .d2-pbtn{transform:scale(1.08)}
+.hp .d2-vframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.hp .d2-vid figcaption{display:grid;gap:8px}
+.hp .d2-vid figcaption .eb{justify-self:start}
+.hp .d2-vid figcaption b{font:600 22px/1.25 'Geist',system-ui,sans-serif;letter-spacing:-.01em}
+@media (max-width:760px){ .hp .d2-vid{grid-template-columns:1fr} }
+
+/* ---- homepage FAQ tabs ---- */
+.hp .d2-fqt{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.hp .d2-fqt button{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;cursor:pointer;
+  border:1px solid color-mix(in srgb,var(--ink) 16%,transparent);background:transparent;color:var(--ink);font:500 15px/1 'Geist',system-ui,sans-serif;
+  transition:background-color .3s cubic-bezier(.32,.72,0,1),color .3s cubic-bezier(.32,.72,0,1)}
+.hp .d2-fqt button small{font:600 12px/1 'Geist Mono',ui-monospace,monospace;color:inherit;opacity:.75}
+.hp .d2-fqt button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* ---- staff login link in the footer's bottom line ---- */
+.hp .ftr .d2-staff{color:inherit;opacity:.75;text-decoration:underline;text-underline-offset:3px}
+.hp .ftr .d2-staff:hover{opacity:1}
+
+/* ---- contact: Sales / Service labels and the map link ---- */
+.hp .ftr .d2-lbl{display:block;margin-top:6px;font:600 12px/1.2 'Geist Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+.hp .ftr li:first-child .d2-lbl{margin-top:0}
+.hp .det .d2-pair small{display:block}
+.hp .d2-map{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-weight:600;color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+
+@media (prefers-reduced-motion:reduce){
+  .hp .d2-badge{animation:none}
+  .d2-scrim,.d2-card,.hp .d2-vplay img,.hp .d2-pbtn{transition:none}
+}
+
+/* prev/next links: room below them for the footer sheet, which laps up over the page by its corner radius */
+html:not([data-l3-fx-sheets="flat"]) .hp main .prevnext{padding-bottom:calc(var(--l3r) + 28px)}

@@ -1,0 +1,193 @@
+/* Arshad Site Lab 3 (16 Oct 2026): the redesign layer over draft 1.
+   Same content and structure as draft 1 and Lab 2; this file changes how it looks and moves:
+   type (Geist), surfaces (solid colours and textured solids on every section sheet, over a darker tray),
+   layered section transitions, content entrances, machined card trays, pill buttons and a glass header.
+   Options in the drawer switch parts of it off (html[data-l3-*]); visitors who ask for reduced motion get none of the motion. */
+
+:root{--l3e:cubic-bezier(.32,.72,0,1);--l3e2:cubic-bezier(.16,1,.3,1);--l3r:clamp(22px,3.2vw,46px)}
+
+/* ===================== type ===================== */
+html:not([data-l3-type="d1"]) .hp{--fH:"Geist",system-ui,sans-serif;--fB:"Geist",system-ui,sans-serif;--fM:"Geist Mono",ui-monospace,monospace;--hW:600;--hTr:-.038em;--hSt:100%;--mTr:.06em;--SfM:"Geist Mono",ui-monospace,monospace}
+html:not([data-l3-type="d1"]) .hp h3{letter-spacing:-.022em}
+.hp{font-feature-settings:"ss01","cv11";-webkit-font-smoothing:antialiased}
+.hp h1{font-size:clamp(40px,6.4cqi,96px);line-height:.98}
+.hp h2{font-size:clamp(30px,4.6cqi,62px);line-height:1.02}
+.hp :is(p,li,dd,figcaption,blockquote){text-wrap:pretty}
+.hp .lead{font-size:clamp(17px,1.45cqi,20.5px);line-height:1.6;max-width:56ch}
+.hp :is([data-cnt],[data-count],.gnums b,.ms .yr,.p-spec b,.tnum){font-variant-numeric:tabular-nums}
+
+/* eyebrows: a small pill with a dot, in place of the slanted dash */
+.hp .eb{justify-self:start;align-self:start;width:max-content;max-width:100%;padding:7px 13px 7px 10px;border-radius:999px;font:500 12px/1 var(--fM);letter-spacing:.12em;gap:9px;
+  background:color-mix(in srgb,var(--brandTx) 9%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--brandTx) 22%,transparent)}
+@container hp (max-width:640px){ .hp .eb{letter-spacing:.05em;font-size:12px;line-height:1.35;white-space:normal;width:auto} }
+.hp .eb::before{width:6px;height:6px;border-radius:50%;transform:none;background:currentColor;box-shadow:0 0 0 3px color-mix(in srgb,currentColor 20%,transparent)}
+
+/* ===================== buttons: pills, with the arrow in its own circle ===================== */
+.hp :is(.btnp,.btng){border-radius:999px;padding:13px 22px;font-weight:600;letter-spacing:-.005em;
+  transition:transform .5s var(--l3e),background-color .35s var(--l3e),box-shadow .5s var(--l3e),color .35s var(--l3e),border-color .35s var(--l3e)}
+.hp .btnp{box-shadow:0 12px 26px -14px color-mix(in srgb,var(--brand) 80%,#000),inset 0 1px 0 rgba(255,255,255,.16)}
+.hp .btnp:hover{transform:translateY(-1px);box-shadow:0 18px 34px -16px color-mix(in srgb,var(--brand) 85%,#000),inset 0 1px 0 rgba(255,255,255,.2)}
+.hp .btng{border-color:color-mix(in srgb,currentColor 22%,transparent);background:color-mix(in srgb,currentColor 4%,transparent)}
+.hp .btng:hover{border-color:color-mix(in srgb,currentColor 38%,transparent);background:color-mix(in srgb,currentColor 8%,transparent)}
+.hp :is(.btnp,.btng):active{transform:scale(.98)}
+.hp :is(.btnp,.btng):has(>.arrow){padding:6px 6px 6px 22px;gap:14px}
+.hp :is(.btnp,.btng)>.arrow{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:50%;flex:none;font-size:15px;line-height:1;
+  background:color-mix(in srgb,var(--brandInk) 15%,transparent);box-shadow:inset 0 1px 0 rgba(255,255,255,.14);transition:transform .55s var(--l3e)}
+.hp :is(.btnp,.btng):hover>.arrow{transform:translate(2px,-1px) scale(1.06)}
+.hp :is(a,button,summary,input,select,textarea):focus-visible{outline:2px solid var(--brandTx);outline-offset:3px}
+
+/* ===================== header: a glass island in a thin tray ===================== */
+.hp .shdr[data-v="b"] .bar{margin-top:14px;background:color-mix(in srgb,var(--surf) 70%,transparent);backdrop-filter:blur(18px) saturate(1.25);-webkit-backdrop-filter:blur(18px) saturate(1.25);
+  border:1px solid color-mix(in srgb,var(--ink) 9%,transparent);
+  box-shadow:0 0 0 5px color-mix(in srgb,var(--surf) 26%,transparent),0 0 0 6px color-mix(in srgb,var(--ink) 6%,transparent),0 24px 48px -26px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.07)}
+.hp .shdr .snav>a,.hp .shdr .snav>button{border-radius:999px;transition:background-color .3s var(--l3e),color .3s var(--l3e)}
+.hp .shdr .quote{border-radius:999px!important}
+
+/* ===================== surfaces: a tray, and section sheets on it ===================== */
+/* --l3tex is the tinted texture tile (set by lab3-options.js from the palette), or none for a solid colour */
+.hp{--l3tray:color-mix(in srgb,var(--bg) 72%,#000);--l3sheet:var(--bg);--l3shadow:rgba(0,0,0,.55)}
+html[data-pdark="0"] .hp{--l3tray:color-mix(in srgb,var(--bg) 90%,var(--ink));--l3shadow:color-mix(in srgb,var(--ink) 40%,transparent)}
+#site.hp{background:var(--l3tex,none),var(--l3tray)}
+.hp main .pp{background:transparent}
+.hp main :is(.pgwrap>section,.pp>section),.hp .ftr{background:var(--l3tex,none),var(--l3sheet)}
+.hp main :is(.pgwrap>section,.pp>section).band{--l3sheet:var(--bandBg)}
+.hp main .pgwrap>section.hero{--l3sheet:var(--heroBg)}
+.hp .ftr{--l3sheet:color-mix(in srgb,var(--l3tray) 70%,#000)}
+html[data-pdark="0"] .hp .ftr{--l3sheet:#141810}
+
+/* layered sheets: from the second section on, each sheet has rounded shoulders and laps over the one before */
+html:not([data-l3-fx-sheets="flat"]) .hp main :is(.pgwrap>section,.pp>section)+section,
+html:not([data-l3-fx-sheets="flat"]) .hp .ftr{position:relative;border-radius:var(--l3r) var(--l3r) 0 0;margin-top:calc(-1 * var(--l3r));
+  box-shadow:0 -1px 0 color-mix(in srgb,var(--ink) 10%,transparent),0 -34px 60px -34px var(--l3shadow)}
+html:not([data-l3-fx-sheets="flat"]) .hp main :is(.pgwrap>section,.pp>section){position:relative}
+/* the first sheet after the breadcrumb, and the page's first sheet on the homepage, also get shoulders */
+html:not([data-l3-fx-sheets="flat"]) .hp main .pgwrap>div+section,
+html:not([data-l3-fx-sheets="flat"]) .hp main .pp>div+section{border-radius:var(--l3r) var(--l3r) 0 0}
+
+/* breathing room: bigger section padding, a little more below than above */
+.hp main .pgwrap>section:not(.hero),.hp main .pp>section:not(.fm-hero):not(.thero){padding-block:clamp(72px,9cqi,136px) clamp(84px,10.5cqi,156px)}
+html:not([data-l3-fx-sheets="flat"]) .hp main :is(.pgwrap>section,.pp>section)+section:not(.fm-hero){padding-top:calc(clamp(72px,9cqi,136px) + var(--l3r) * .5)}
+
+/* sinking: as a sheet leaves, it drops back, narrows and dims under the next one (scroll-driven, on the compositor) */
+@supports (animation-timeline:view()){
+  html:not([data-l3-fx-sheets]) .hp main :is(.pgwrap>section,.pp>section):not(:last-child):not(.l3-nosink){
+    transform-origin:50% 100%;animation:l3sink linear both;animation-timeline:view();animation-range:exit 35% exit 100%}
+  @keyframes l3sink{from{transform:none;opacity:1}to{transform:translateY(7vh) scale(.93);opacity:.45}}
+}
+
+/* round 2: room at the foot of every sheet for the next sheet's overlap and the slide, so no line of text ends up under it */
+html:not([data-l3-fx-sheets="flat"]) .hp main :is(.pgwrap>section,.pp>section){padding-bottom:calc(var(--l3r) + 7vh + clamp(40px,5cqi,72px))!important}
+html[data-l3-fx-sheets="rise"] .hp main :is(.pgwrap>section,.pp>section){padding-bottom:calc(var(--l3r) + clamp(40px,5cqi,72px))!important}
+
+/* ===================== content entrance ===================== */
+html:not([data-l3-fx-enter]) .hp .pre{opacity:0;transform:translateY(30px);filter:blur(8px)}
+html:not([data-l3-fx-enter]) .hp .rv{transition:opacity .9s var(--l3e2),transform 1.1s var(--l3e2),filter .9s var(--l3e2)}
+html:not([data-l3-fx-enter]) .hp .rv:not(.in){filter:blur(6px)}
+html[data-l3-fx-enter="fade"] .hp .pre{opacity:0;transform:none;filter:none}
+html[data-l3-fx-enter="fade"] .hp .rv:not(.in){transform:none}
+html[data-l3-fx-enter="off"] .hp :is(.pre,.rv:not(.in)){opacity:1!important;transform:none!important;filter:none!important}
+/* stagger siblings that reveal together */
+.hp .rv:nth-child(2){transition-delay:.07s}.hp .rv:nth-child(3){transition-delay:.14s}.hp .rv:nth-child(4){transition-delay:.21s}
+.hp .rv:nth-child(5){transition-delay:.28s}.hp .rv:nth-child(6){transition-delay:.35s}.hp .rv:nth-child(n+7){transition-delay:.4s}
+
+/* ===================== pictures: a mask that opens, and depth inside the frame ===================== */
+@supports (animation-timeline:view()){
+  html:not([data-l3-fx-img]) .hp .l3-frame{animation:l3mask linear both;animation-timeline:view();animation-range:entry 0% entry 90%}
+  @keyframes l3mask{from{clip-path:inset(10% 8% 10% 8% round 28px)}to{clip-path:inset(0 0 0 0 round 0)}}
+  html:not([data-l3-fx-img]) .hp .l3-frame>.l3-pic{animation:l3depth linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
+  @keyframes l3depth{from{transform:translateY(-5%) scale(1.12)}to{transform:translateY(5%) scale(1.12)}}
+}
+
+/* browsers without scroll timelines: the mask opens once, when the picture comes into view */
+html.l3-notl:not([data-l3-fx-img]) .hp .l3-frame{clip-path:inset(10% 8% 10% 8% round 28px);transition:clip-path 1.2s var(--l3e2)}
+html.l3-notl:not([data-l3-fx-img]) .hp .l3-frame.l3-in{clip-path:inset(0 0 0 0 round 0)}
+
+/* ===================== cards: machined trays (outer shell, hairline, inner highlight) with a spotlight edge ===================== */
+html:not([data-l3-fx-cards]) .hp .l3-card{--l3shell:color-mix(in srgb,var(--ink) 4.5%,transparent);--l3hair:color-mix(in srgb,var(--ink) 9%,transparent);
+  border-color:color-mix(in srgb,var(--ink) 10%,transparent)!important;
+  box-shadow:0 0 0 5px var(--l3shell),0 0 0 6px var(--l3hair),0 26px 44px -30px var(--l3shadow),inset 0 1px 0 color-mix(in srgb,#fff 7%,transparent)!important;
+  transition:box-shadow .5s var(--l3e),transform .5s var(--l3e),border-color .5s var(--l3e)}
+html:not([data-l3-fx-cards]) .hp .l3-card::after{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;padding:1px;opacity:0;transition:opacity .4s var(--l3e);
+  background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--brandTx) 75%,transparent),transparent 70%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+html:not([data-l3-fx-cards]) .hp .l3-card:hover::after{opacity:1}
+
+/* ===================== page change: a layered wipe (three sheets rise, then lift away) ===================== */
+.ptrans.wipe{flex-direction:column;justify-content:flex-end}
+.ptrans.wipe i{flex:none;position:absolute;inset:0;border-radius:44px 44px 0 0;transform:translateY(102%);animation:l3wipe .72s var(--l3e) forwards;background:var(--tbg2,#3A4520)}
+.ptrans.wipe i:nth-child(1){background:var(--tbg,#576630);animation-delay:0s}
+.ptrans.wipe i:nth-child(2){background:color-mix(in srgb,var(--tbg2,#3A4520) 70%,#000);animation-delay:.05s}
+.ptrans.wipe i:nth-child(3){background:var(--bg,#11150C);animation-delay:.1s}
+@keyframes l3wipe{0%{transform:translateY(102%);border-radius:44px 44px 0 0}42%{transform:translateY(0);border-radius:0}58%{transform:translateY(0);border-radius:0}100%{transform:translateY(-102%);border-radius:0 0 44px 44px}}
+
+/* ===================== reduced motion: none of the above moves ===================== */
+@media (prefers-reduced-motion:reduce){
+  .hp main :is(.pgwrap>section,.pp>section),.hp .l3-frame,.hp .l3-frame>.l3-pic{animation:none!important}
+  .hp :is(.pre,.rv:not(.in)){opacity:1!important;transform:none!important;filter:none!important}
+  .ptrans.wipe{display:none}
+}
+
+/* ===================== product pages (round 2): one opening on every page ===================== */
+/* series buttons: one row in the same place on all six pages; the picked series is filled with the text colour */
+.hp .thero .l3-series{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 2px}
+.hp .thero .l3-series>button{display:grid;gap:3px;align-content:center;text-align:left;min-height:44px;padding:9px 16px;border-radius:16px;border:1px solid color-mix(in srgb,var(--ink) 16%,transparent);background:color-mix(in srgb,var(--ink) 4%,transparent);color:var(--ink);font:600 14px/1.2 var(--fB);cursor:pointer;box-shadow:none;transition:background-color .3s var(--l3e),color .3s var(--l3e),border-color .3s var(--l3e),transform .4s var(--l3e)}
+.hp .thero .l3-series>button span{font:400 12.5px/1.3 var(--fB);color:var(--mut)}
+.hp .thero .l3-series>button:hover{border-color:color-mix(in srgb,var(--ink) 34%,transparent)}
+.hp .thero .l3-series>button:active{transform:scale(.98)}
+.hp .thero .l3-series>button:is([aria-pressed="true"],[aria-selected="true"]){background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.hp .thero .l3-series>button:is([aria-pressed="true"],[aria-selected="true"]) span{color:var(--bg)}
+.hp .thero .bz-ladder.l3-series{grid-template-columns:none;background:none;border:0;padding:0;box-shadow:none}
+/* series buttons as tabs over the top of the picture */
+html[data-l-p-series="tabs"] .hp .thero .vis>.l3-series{position:absolute;z-index:3;top:12px;left:12px;right:12px;margin:0;gap:6px}
+html[data-l-p-series="tabs"] .hp .thero .vis>.l3-series>button{min-height:40px;padding:7px 12px;border-radius:999px;background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+html[data-l-p-series="tabs"] .hp .thero .vis>.l3-series>button span{display:none}
+html[data-l-p-series="tabs"] .hp .thero .vis>.l3-series>button:is([aria-pressed="true"],[aria-selected="true"]){background:var(--ink)}
+/* series buttons as a list beside the picture */
+html[data-l-p-series="list"] .hp .thero .wrap{grid-template-columns:minmax(0,1fr) minmax(150px,.34fr) minmax(0,1fr)}
+html[data-l-p-series="list"] .hp .thero .wrap>.l3-series{flex-direction:column;flex-wrap:nowrap;align-self:center;margin:0}
+html[data-l-p-series="list"] .hp .thero .wrap>.l3-series>button{width:100%}
+/* opening arrangement */
+html[data-l-p-open="left"] .hp .thero .wrap{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+html[data-l-p-open="left"] .hp .thero .wrap>.vis{order:-1}
+html[data-l-p-open="left"][data-l-p-series="list"] .hp .thero .wrap{grid-template-columns:minmax(150px,.34fr) minmax(0,1.15fr) minmax(0,1fr)}
+html[data-l-p-open="left"][data-l-p-series="list"] .hp .thero .wrap>.l3-series{order:-2}
+html[data-l-p-open="above"] .hp .thero .wrap{grid-template-columns:1fr}
+html[data-l-p-open="above"] .hp .thero .wrap>.vis{order:-1;min-height:clamp(320px,40cqi,560px)}
+html[data-l-p-open="above"][data-l-p-series="list"] .hp .thero .wrap>.l3-series{order:-1;flex-direction:row;flex-wrap:wrap}
+@container hp (max-width:860px){
+  .hp .thero .wrap{grid-template-columns:1fr!important}
+  html[data-l-p-series="list"] .hp .thero .wrap>.l3-series{flex-direction:row;flex-wrap:wrap}
+}
+/* specs as compact cards */
+html[data-l-p-specs="cards"] .hp .p-spec table,html[data-l-p-specs="cards"] .hp .p-spec tbody{display:block}
+html[data-l-p-specs="cards"] .hp .p-spec tbody{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+html[data-l-p-specs="cards"] .hp .p-spec tr{display:grid;gap:4px;align-content:start;padding:12px 14px;border-radius:12px;background:color-mix(in srgb,var(--ink) 5%,transparent)}
+html[data-l-p-specs="cards"] .hp .p-spec :is(th,td){display:block;padding:0;border:0;text-align:left}
+html[data-l-p-specs="cards"] .hp .p-spec th{font-size:12.5px;color:var(--mut);font-weight:500}
+/* 3D objects: the parts / pipes / cables view tabs sit on the picture */
+.hp .thero .vis>.ob-tabs.l3-onpic{position:absolute;z-index:3;left:12px;bottom:12px;display:flex;flex-wrap:wrap;gap:6px;margin:0}
+.hp .thero .vis>.ob-tabs.l3-onpic button{min-height:38px;padding:7px 12px;border-radius:999px;border:1px solid color-mix(in srgb,var(--ink) 18%,transparent);background:color-mix(in srgb,var(--bg) 80%,transparent);color:var(--ink);font:600 13px/1 var(--fB);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);cursor:pointer}
+.hp .thero .vis>.ob-tabs.l3-onpic button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+/* Simco-Ion: the product photo in the opening, and the product the series button points at */
+.hp .thero .vis>.l3-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:clamp(12px,2cqi,28px)}
+.hp .io-apps .p-card.l3-pick{box-shadow:0 0 0 2px var(--ink)}
+/* Simco-Ion: the problem picker and the static simulator together as a demo */
+.hp .predemo{display:grid;gap:16px}
+.hp .predemo .io-stage{position:relative;min-height:clamp(300px,34cqi,460px);border-radius:calc(var(--r) * 1.2);overflow:hidden}
+
+/* ===================== readability fixes (16 Oct 2026, site lab 3 - readability/) ===================== */
+/* Brand green bands: bands on the inner pages get the same light-on-green colours as the homepage bands */
+.hp[data-look="green"] main .psec.band{--ink:#FFFFFF;--mut:#DDE3CB;--muted:#DDE3CB;--line:#6F7F48;--brandTx:#E7ECD6;--surf:#62723A;--surf2:#4E5C2B;--brand:#FFFFFF;--brandInk:#3A4520;--brandD:#EEF1E4;color:#FFFFFF}
+/* product page notes at full strength (the Brezo photo hint was faint) */
+.hp .pp .p-note{color:var(--mut);opacity:1}
+/* dimmed items recede but stay readable: story chapters not reached yet, film series that don't fit the filters */
+.hp .chap .step:not(.on){opacity:.66}
+.hp .pp .fm-card.no{opacity:.76}
+.hp .pp .fm-card.no .fit{color:var(--mut)}
+/* running text at 16px, notes at 14px (marked by lab3.js) */
+.hp .l3-body{font-size:16px!important;line-height:1.65}
+.hp .l3-note{font-size:14px!important}
+/* family names on the dark homepage product panels: a light tint of the family colour */
+.hp .doors .acl{color:color-mix(in srgb,var(--ac) 35%,#FFFFFF)}
+/* introductions no wider than about 65 characters */
+.hp main :is(p.lead,p.p-sub,p.p-lede){max-width:58ch!important}
